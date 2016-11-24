@@ -1,0 +1,10 @@
+syntax = "proto3";
+
+package pb;
+
+// gRPC gateway imports
+import "google/api/annotations.proto";
+
+message AuthorizationCodeCreatedEvent {
+
+}
