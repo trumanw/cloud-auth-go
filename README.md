@@ -24,7 +24,7 @@ A gRPC based authentication service(OpenID Connect)
 - state
 
 ### 3. Error Response:
-- ### error 
+- ### error
   - #### invalid_request
     The request is missing a required parameter, includes an
     invalid parameter value, includes a parameter more than
@@ -39,37 +39,37 @@ A gRPC based authentication service(OpenID Connect)
     URI used in the authorization request, or was issued to
     another client.
   - #### access_denied
-    The resource owner or authorization server denied the 
-    request. 
+    The resource owner or authorization server denied the
+    request.
   - #### unsupported_grant_type
     The authorization grant type is not supported by the
     authorization server.
   - #### unsupported_response_type
-    The authorization server does not support obtaining an 
+    The authorization server does not support obtaining an
     authorization code using this method.
-  - #### invalid_scope 
+  - #### invalid_scope
     The requested scope is invalid, unknown, or malformed.
   - #### server_error
-    The authorization server encountered an unexpected 
+    The authorization server encountered an unexpected
     condition that prevented it from fulfilling the request.
     (This error code is needed because a 500 Internal Server
     Error HTTP status code cannot be returned to the client
     via an HTTP redirect.)
-  - #### temporarily_unavailable 
+  - #### temporarily_unavailable
     The authorization server is currently unable to handle
-    the request due to a temporary overloading or maintenance 
+    the request due to a temporary overloading or maintenance
     of the server.  (This error code is needed because a 503
     Service Unavailable HTTP status code cannot be returned
     to the client via an HTTP redirect.)
 - ### error_description
-  Human-readable ASCII [USASCII] text providing additional 
-  information, used to assist the client developer in 
+  Human-readable ASCII [USASCII] text providing additional
+  information, used to assist the client developer in
   understanding the error that occurred.
 - ### error_uri
-  A URI identifying a human-readable web page with 
-  information about the error, used to provide the client 
+  A URI identifying a human-readable web page with
+  information about the error, used to provide the client
   developer with additional information about the error.
 - ### state
-  if a "state" parameter was present in the client 
-  authorization request. The exact value received from the 
+  if a "state" parameter was present in the client
+  authorization request. The exact value received from the
   client.
