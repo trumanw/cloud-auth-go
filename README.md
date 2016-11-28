@@ -2,8 +2,8 @@
 A gRPC based authentication service(OpenID Connect)
 =================================
 
-# General OAuth 2.0 models(refer to [RFC6749](https://tools.ietf.org/html/rfc6749)):
-## 1. Access Token Request:
+##  General OAuth 2.0 models(refer to [RFC6749](https://tools.ietf.org/html/rfc6749)):
+### 1. Access Token Request:
 - grant_type (authorization_code, implicit, password and client_credentials)
 - client_id (could be public accessible)
 - client_secret (should be protected in motion and at rest)
@@ -15,7 +15,7 @@ A gRPC based authentication service(OpenID Connect)
 - scope
 - state
 
-## 2. Access Token Response:
+### 2. Access Token Response:
 - access_token
 - token_type (e.g. basic, bearer, mac, hmac, etc.)
 - expires_in (seconds)
@@ -23,7 +23,7 @@ A gRPC based authentication service(OpenID Connect)
 - scope
 - state
 
-## 3. Error Response:
+### 3. Error Response:
 - ### error 
   - #### invalid_request
     The request is missing a required parameter, includes an
