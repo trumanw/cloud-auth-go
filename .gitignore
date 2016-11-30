@@ -24,3 +24,5 @@ _testmain.go
 *.exe
 *.test
 *.prof
+# Compiled executable file
+cloud-auth-go
