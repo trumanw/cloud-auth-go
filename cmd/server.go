@@ -3,14 +3,11 @@ package cmd
 import (
     "fmt"
     "flag"
-    "net"
 
     "github.com/golang/glog"
-    "google.golang.org/grpc"
     "github.com/spf13/cobra"
 
-    rpc "github.com/trumanw/cloud-auth-go/rpc"
-    gw "github.com/trumanw/cloud-auth-go/pb"
+    srv "github.com/trumanw/cloud-auth-go/server"
 )
 
 // Add a cobra command to maintain all the gRPC server
@@ -28,21 +25,8 @@ var serverCmd = &cobra.Command{
         flag.Parse()
         defer glog.Flush()
 
-        if err := runServer(); err != nil {
+        if err := srv.Run(); err != nil {
             glog.Fatal(err)
         }
     },
-}
-
-// Launch the gRPC servers
-func runServer() error {
-    l ,err := net.Listen("tcp", ":9090")
-    if err != nil {
-        return err
-    }
-    s := grpc.NewServer()
-    gw.RegisterCilentCredentialsServiceServer(s, rpc.newClientCredentialsRPC())
-
-    s.Serve(l)
-    return nil
 }
