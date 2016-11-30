@@ -3,40 +3,19 @@ package cmd
 import (
     "fmt"
     "flag"
-    "net/http"
+    "net"
 
     "github.com/golang/glog"
-    "golang.org/x/net/context"
-    "github.com/grpc-ecosystem/grpc-gateway/runtime"
     "google.golang.org/grpc"
-
     "github.com/spf13/cobra"
 
+    sr "github.com/trumanw/cloud-auth-go/srv"
     gw "github.com/trumanw/cloud-auth-go/pb"
 )
 
+// Add a cobra command to maintain all the gRPC server
 func init() {
     RootCmd.AddCommand(serverCmd)
-}
-
-var (
-    ccEndpoint = flag.String("client_credentials_endpoint", "localhost:9090", "endpoint of client crendentials")
-)
-
-func run() error {
-    ctx := context.Background()
-    ctx, cancel := context.WithCancel(ctx)
-    defer cancel()
-
-    mux := runtime.NewServeMux()
-    opts := []grpc.DialOption{grpc.WithInsecure()}
-    err := gw.RegisterCilentCredentialsServiceHandlerFromEndpoint(ctx, mux, *ccEndpoint, opts)
-    if err != nil {
-        return err
-    }
-
-    http.ListenAndServe(":8080", mux)
-    return nil
 }
 
 var serverCmd = &cobra.Command{
@@ -49,8 +28,21 @@ var serverCmd = &cobra.Command{
         flag.Parse()
         defer glog.Flush()
 
-        if err := run(); err != nil {
+        if err := runServer(); err != nil {
             glog.Fatal(err)
         }
     },
+}
+
+// Launch the gRPC servers
+func runServer() error {
+    l ,err := net.Listen("tcp", ":9090")
+    if err != nil {
+        return err
+    }
+    s := grpc.NewServer()
+    gw.RegisterCilentCredentialsServiceServer(s, sr.newClientCredentialsServer())
+
+    s.Serve(l)
+    return nil
 }

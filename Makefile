@@ -30,4 +30,4 @@ protoc:
 	$(GWSRCS_GEN)
 
 build: protoc
-	go build main.go -o build/oauth
+	go build -o build/oauth main.go
