@@ -1,4 +1,4 @@
-package server 
+package rpc
 
 import (
     "golang.org/x/net/context"
@@ -6,10 +6,10 @@ import (
     pb "github.com/trumanw/cloud-auth-go/pb"
 )
 
-type clientCredentialsServer struct {}
+type clientCredentialsRPC struct {}
 
-func newClientCredentialsServer() pb.CilentCredentialsServiceServer {
-    return new(clientCredentialsServer)
+func newClientCredentialsRPC() pb.CilentCredentialsServiceServer {
+    return new(clientCredentialsRPC)
 }
 
 func (s *clientCredentialsServer) CreateClientCredentials(ctx context.Context, clientCredentials *pb.ClientCredentialsCreatedEvent) (*pb.Token, error) {

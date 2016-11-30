@@ -49,6 +49,41 @@ func (m *ClientCredentialsCreatedEvent) String() string            { return prot
 func (*ClientCredentialsCreatedEvent) ProtoMessage()               {}
 func (*ClientCredentialsCreatedEvent) Descriptor() ([]byte, []int) { return fileDescriptor0, []int{0} }
 
+func (m *ClientCredentialsCreatedEvent) GetClientId() string {
+	if m != nil {
+		return m.ClientId
+	}
+	return ""
+}
+
+func (m *ClientCredentialsCreatedEvent) GetClientSecret() string {
+	if m != nil {
+		return m.ClientSecret
+	}
+	return ""
+}
+
+func (m *ClientCredentialsCreatedEvent) GetRequestId() string {
+	if m != nil {
+		return m.RequestId
+	}
+	return ""
+}
+
+func (m *ClientCredentialsCreatedEvent) GetPartnerAttrId() string {
+	if m != nil {
+		return m.PartnerAttrId
+	}
+	return ""
+}
+
+func (m *ClientCredentialsCreatedEvent) GetGrantType() string {
+	if m != nil {
+		return m.GrantType
+	}
+	return ""
+}
+
 func init() {
 	proto.RegisterType((*ClientCredentialsCreatedEvent)(nil), "pb.ClientCredentialsCreatedEvent")
 }
@@ -59,7 +94,7 @@ var _ grpc.ClientConn
 
 // This is a compile-time assertion to ensure that this generated file
 // is compatible with the grpc package it is being compiled against.
-const _ = grpc.SupportPackageIsVersion3
+const _ = grpc.SupportPackageIsVersion4
 
 // Client API for CilentCredentialsService service
 
@@ -122,7 +157,7 @@ var _CilentCredentialsService_serviceDesc = grpc.ServiceDesc{
 		},
 	},
 	Streams:  []grpc.StreamDesc{},
-	Metadata: fileDescriptor0,
+	Metadata: "pb/client_credentials.proto",
 }
 
 func init() { proto.RegisterFile("pb/client_credentials.proto", fileDescriptor0) }

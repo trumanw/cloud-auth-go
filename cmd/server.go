@@ -9,7 +9,7 @@ import (
     "google.golang.org/grpc"
     "github.com/spf13/cobra"
 
-    sr "github.com/trumanw/cloud-auth-go/server"
+    rpc "github.com/trumanw/cloud-auth-go/rpc"
     gw "github.com/trumanw/cloud-auth-go/pb"
 )
 
@@ -41,7 +41,7 @@ func runServer() error {
         return err
     }
     s := grpc.NewServer()
-    gw.RegisterCilentCredentialsServiceServer(s, sr.newClientCredentialsServer())
+    gw.RegisterCilentCredentialsServiceServer(s, rpc.newClientCredentialsRPC())
 
     s.Serve(l)
     return nil

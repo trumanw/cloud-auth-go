@@ -27,6 +27,48 @@ func (m *Token) String() string            { return proto.CompactTextString(m) }
 func (*Token) ProtoMessage()               {}
 func (*Token) Descriptor() ([]byte, []int) { return fileDescriptor1, []int{0} }
 
+func (m *Token) GetAccessToken() string {
+	if m != nil {
+		return m.AccessToken
+	}
+	return ""
+}
+
+func (m *Token) GetTokenType() string {
+	if m != nil {
+		return m.TokenType
+	}
+	return ""
+}
+
+func (m *Token) GetExpiresIn() uint64 {
+	if m != nil {
+		return m.ExpiresIn
+	}
+	return 0
+}
+
+func (m *Token) GetRefreshToken() string {
+	if m != nil {
+		return m.RefreshToken
+	}
+	return ""
+}
+
+func (m *Token) GetScope() string {
+	if m != nil {
+		return m.Scope
+	}
+	return ""
+}
+
+func (m *Token) GetState() string {
+	if m != nil {
+		return m.State
+	}
+	return ""
+}
+
 func init() {
 	proto.RegisterType((*Token)(nil), "pb.Token")
 }
