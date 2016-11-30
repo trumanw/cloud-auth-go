@@ -9,7 +9,7 @@ import (
     "google.golang.org/grpc"
     "github.com/spf13/cobra"
 
-    sr "github.com/trumanw/cloud-auth-go/srv"
+    sr "github.com/trumanw/cloud-auth-go/server"
     gw "github.com/trumanw/cloud-auth-go/pb"
 )
 
