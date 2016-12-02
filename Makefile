@@ -31,3 +31,11 @@ protoc:
 
 build: protoc
 	go build -o build/oauth main.go
+
+server:
+	./build/oauth server
+
+gateway:
+	./build/oauth gateway
+
+.PHONY: server gateway protoc build
