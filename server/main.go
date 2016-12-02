@@ -4,7 +4,9 @@ import (
 	"net"
 
 	gw "github.com/trumanw/cloud-auth-go/pb"
-	it "github.com/trumanw/cloud-auth-go/interceptor"
+	it "github.com/trumanw/cloud-auth-go/server/unary"
+	chain "github.com/mwitkow/go-grpc-middleware"
+
 	"google.golang.org/grpc"
 )
 
@@ -14,10 +16,9 @@ func Run() error {
         return err
     }
 
-	var opts []grpc.ServerOption
 	// add the handlers as a server option
-	opts = append(opts, grpc.UnaryInterceptor(it.IdemUnaryInterceptor))
-    s := grpc.NewServer(opts...)
+	unaryChain := chain.ChainUnaryServer(it.IdemUnary, it.BasicAuthUnary)
+    s := grpc.NewServer(grpc.UnaryInterceptor(unaryChain))
     gw.RegisterCilentCredentialsServiceServer(s, newClientCredentialsServer())
 
     s.Serve(l)
