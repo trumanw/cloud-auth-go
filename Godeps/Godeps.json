@@ -2,6 +2,9 @@
 	"ImportPath": "github.com/trumanw/cloud-auth-go",
 	"GoVersion": "go1.7",
 	"GodepVersion": "v75",
+	"Packages": [
+		"./..."
+	],
 	"Deps": [
 		{
 			"ImportPath": "github.com/fsnotify/fsnotify",
@@ -228,6 +231,40 @@
 			"ImportPath": "google.golang.org/grpc/transport",
 			"Comment": "v1.0.4-75-g417442a",
 			"Rev": "417442a753748fba8b9fade9953a9355ad570906"
+		},
+		{
+			"ImportPath": "gopkg.in/bsm/ratelimit.v1",
+			"Rev": "db14e161995a5177acef654cb0dd785e8ee8bc22"
+		},
+		{
+			"ImportPath": "gopkg.in/redis.v5",
+			"Comment": "v5.1.1",
+			"Rev": "e7f23a300bf5f75d2a658cc07233f025362a24f6"
+		},
+		{
+			"ImportPath": "gopkg.in/redis.v5/internal",
+			"Comment": "v5.1.1",
+			"Rev": "e7f23a300bf5f75d2a658cc07233f025362a24f6"
+		},
+		{
+			"ImportPath": "gopkg.in/redis.v5/internal/consistenthash",
+			"Comment": "v5.1.1",
+			"Rev": "e7f23a300bf5f75d2a658cc07233f025362a24f6"
+		},
+		{
+			"ImportPath": "gopkg.in/redis.v5/internal/hashtag",
+			"Comment": "v5.1.1",
+			"Rev": "e7f23a300bf5f75d2a658cc07233f025362a24f6"
+		},
+		{
+			"ImportPath": "gopkg.in/redis.v5/internal/pool",
+			"Comment": "v5.1.1",
+			"Rev": "e7f23a300bf5f75d2a658cc07233f025362a24f6"
+		},
+		{
+			"ImportPath": "gopkg.in/redis.v5/internal/proto",
+			"Comment": "v5.1.1",
+			"Rev": "e7f23a300bf5f75d2a658cc07233f025362a24f6"
 		},
 		{
 			"ImportPath": "gopkg.in/yaml.v2",
