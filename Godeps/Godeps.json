@@ -138,6 +138,11 @@
 			"Rev": "651d9d916abc3c3d6a91a12549495caba5edffd2"
 		},
 		{
+			"ImportPath": "github.com/urfave/negroni",
+			"Comment": "v0.2.0-73-gcd97340",
+			"Rev": "cd9734011043904139c24dbad9a71b21f1586f36"
+		},
+		{
 			"ImportPath": "golang.org/x/net/context",
 			"Rev": "4971afdc2f162e82d185353533d3cf16188a9f4e"
 		},
@@ -265,6 +270,10 @@
 			"ImportPath": "gopkg.in/redis.v5/internal/proto",
 			"Comment": "v5.1.1",
 			"Rev": "e7f23a300bf5f75d2a658cc07233f025362a24f6"
+		},
+		{
+			"ImportPath": "gopkg.in/unrolled/render.v1",
+			"Rev": "526faf80cd4b305bb8134abea8d20d5ced74faa6"
 		},
 		{
 			"ImportPath": "gopkg.in/yaml.v2",

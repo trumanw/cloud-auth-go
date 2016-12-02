@@ -8,6 +8,8 @@ import (
     "github.com/grpc-ecosystem/grpc-gateway/runtime"
     "google.golang.org/grpc"
 
+    ng "github.com/urfave/negroni"
+    hnd "github.com/trumanw/cloud-auth-go/gateway/handler"
     pb "github.com/trumanw/cloud-auth-go/pb"
 )
 
@@ -22,12 +24,18 @@ func Run() error {
     defer cancel()
 
     mux := runtime.NewServeMux()
+    // Add middlewares
+    n := ng.New()
+    n.Use(hnd.NewLogger())
+    n.Use(hnd.NewIdempotent())
+    n.UseHandler(mux)
+
     opts := []grpc.DialOption{grpc.WithInsecure()}
     err := pb.RegisterCilentCredentialsServiceHandlerFromEndpoint(ctx, mux, *ccEndpoint, opts)
     if err != nil {
         return err
     }
 
-    http.ListenAndServe(":8080", mux)
+    http.ListenAndServe(":8080", n)
     return nil
 }

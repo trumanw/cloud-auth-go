@@ -35,6 +35,6 @@ func BasicAuthUnary(
 
 func ValidateBasicCredentials(authorization []string) (isValid bool, err error) {
     fmt.Println("Validating the Authorization in headers...")
-    fmt.Println(authorization)
+    // fmt.Println(authorization)
     return true, nil
 }

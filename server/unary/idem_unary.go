@@ -35,6 +35,6 @@ func IdemUnary(
 
 func ValidateIdemByRequestId(requestId []string) (isValid bool, err error) {
     fmt.Println("Validating the Request-Id in headers...")
-    fmt.Println(requestId)
+    // fmt.Println(requestId)
     return true, nil
 }
