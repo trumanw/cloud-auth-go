@@ -17,7 +17,7 @@ func Run() error {
     }
 
 	// add the handlers as a server option
-	unaryChain := chain.ChainUnaryServer(it.IdemUnary, it.BasicAuthUnary)
+	unaryChain := chain.ChainUnaryServer(it.BasicAuthUnary)
     s := grpc.NewServer(grpc.UnaryInterceptor(unaryChain))
     gw.RegisterCilentCredentialsServiceServer(s, newClientCredentialsServer())
 

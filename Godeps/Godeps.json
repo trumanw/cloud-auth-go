@@ -110,6 +110,16 @@
 			"Rev": "7cb988051d5045890cb91402a0b5fddc76c627bc"
 		},
 		{
+			"ImportPath": "github.com/rs/cors",
+			"Comment": "v1.0",
+			"Rev": "a62a804a8a009876ca59105f7899938a1349f4b3"
+		},
+		{
+			"ImportPath": "github.com/rs/xhandler",
+			"Comment": "v1.0-1-ged27b6f",
+			"Rev": "ed27b6fd65218132ee50cd95f38474a3d8a2cd12"
+		},
+		{
 			"ImportPath": "github.com/spf13/afero",
 			"Rev": "06b7e5f50606ecd49148a01a6008942d9b669217"
 		},

@@ -11,6 +11,7 @@ import (
     ng "github.com/urfave/negroni"
     hnd "github.com/trumanw/cloud-auth-go/gateway/handler"
     pb "github.com/trumanw/cloud-auth-go/pb"
+    "github.com/rs/cors"
 )
 
 // gRPC gateway registration
@@ -28,6 +29,7 @@ func Run() error {
     n := ng.New()
     n.Use(hnd.NewLogger())
     n.Use(hnd.NewIdempotent())
+    n.Use(cors.New(cors.Options{}))
     n.UseHandler(mux)
 
     opts := []grpc.DialOption{grpc.WithInsecure()}
