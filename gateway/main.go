@@ -17,11 +17,6 @@ import (
     etcdnaming "github.com/coreos/etcd/clientv3/naming"
 )
 
-// gRPC gateway registration
-var (
-    ccEndpoint = flag.String("client_credentials_endpoint", "localhost:9090", "endpoint of client crendentials")
-)
-
 func Run() error {
     ctx := context.Background()
     ctx, cancel := context.WithCancel(ctx)
@@ -35,7 +30,6 @@ func Run() error {
     n.Use(cors.New(cors.Options{}))
     n.UseHandler(mux)
 
-    // opts := []grpc.DialOption{grpc.WithInsecure()}
     // resolve connections through etcd
     cli, cerr := clientv3.NewFromURL("http://localhost:2379")
     if cerr != nil {
@@ -49,7 +43,6 @@ func Run() error {
         return gerr
     }
 
-    // err := pb.RegisterCilentCredentialsServiceHandlerFromEndpoint(ctx, mux, *ccEndpoint, opts)
     // register client with connection
     err := pb.RegisterCilentCredentialsServiceHandler(ctx, mux, conn)
     if err != nil {
