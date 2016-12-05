@@ -2,6 +2,7 @@ package server
 
 import (
 	"net"
+	"strconv"
 
 	gw "github.com/trumanw/cloud-auth-go/pb"
 	it "github.com/trumanw/cloud-auth-go/server/unary"
@@ -14,8 +15,9 @@ import (
 	etcdnaming "github.com/coreos/etcd/clientv3/naming"
 )
 
-func Run() error {
-    l ,err := net.Listen("tcp", ":9090")
+func Run(host string, port int) error {
+	addr := host + ":" + strconv.Itoa(port)
+    l ,err := net.Listen("tcp", addr)
     if err != nil {
         return err
     }
@@ -28,7 +30,7 @@ func Run() error {
 	defer cli.Close()
 
 	r := &etcdnaming.GRPCResolver{Client: cli}
-	r.Update(context.TODO(), "cloud-auth-go", naming.Update{Op: naming.Add, Addr: "localhost:9090", Metadata: "..."})
+	r.Update(context.TODO(), "cloud-auth-go", naming.Update{Op: naming.Add, Addr: addr, Metadata: "..."})
 
 	// add the handlers as a server option
 	unaryChain := chain.ChainUnaryServer(it.BasicAuthUnary)

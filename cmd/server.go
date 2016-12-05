@@ -11,7 +11,16 @@ import (
 )
 
 // Add a cobra command to maintain all the gRPC server
+
+var host string
+var port int
+
 func init() {
+    // Init flags
+    serverCmd.Flags().StringVarP(&host, "host", "", "", "host of the gRPC server.")
+    serverCmd.Flags().IntVarP(&port, "port", "", 9090, "port of the gRPC server.")
+
+    // Add commands to root cmd
     RootCmd.AddCommand(serverCmd)
 }
 
@@ -25,7 +34,7 @@ var serverCmd = &cobra.Command{
         flag.Parse()
         defer glog.Flush()
 
-        if err := srv.Run(); err != nil {
+        if err := srv.Run(host, port); err != nil {
             glog.Fatal(err)
         }
     },
