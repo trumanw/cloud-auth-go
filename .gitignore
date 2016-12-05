@@ -9,6 +9,7 @@ _test
 .vscode
 vendor
 build
+default.etcd
 
 # Architecture specific extensions/prefixes
 *.[568vq]
