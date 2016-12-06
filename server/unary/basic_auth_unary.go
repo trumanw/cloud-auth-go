@@ -2,6 +2,9 @@ package unary
 
 import (
     "fmt"
+    "errors"
+    "strings"
+    b64 "encoding/base64"
 
     "golang.org/x/net/context"
     "google.golang.org/grpc"
@@ -34,7 +37,40 @@ func BasicAuthUnary(
 }
 
 func ValidateBasicCredentials(authorization []string) (isValid bool, err error) {
-    fmt.Println("Validating the Authorization in headers...")
-    // fmt.Println(authorization)
+    fmt.Printf("Validating the Authorization(%v) in headers...\n", authorization)
+    if len(authorization) <= 0 {
+        return false, nil
+    }
+    // parse clientId and clientSecret from Authorization in headers
+    id, secret, err := ParseBasicAuthorization(authorization[0])
+    fmt.Printf("[CREDENTIALS] Validated id: %s, secret: %s \n", id, secret)
+
     return true, nil
+}
+
+func ParseBasicAuthorization(authorzation string) (id string, secret string, err error) {
+    authorizationSplitedArr := strings.Split(authorzation, " ")
+    if len(authorizationSplitedArr) < 2 {
+        return "", "", errors.New("Invalid authorization.")
+    }
+    fmt.Println(authorizationSplitedArr[0])
+    if authType := authorizationSplitedArr[0]; authType != "Basic" {
+        return "", "", errors.New("Invalid type of authorization: " + authType)
+    }
+
+    authClaim := authorizationSplitedArr[1]
+    authorizationDecodedBytes, derr := b64.URLEncoding.DecodeString(authClaim)
+    if derr != nil {
+        fmt.Println(derr)
+        return "", "", derr
+    }
+
+    authorizationDecodedStringArr := strings.Split(string(authorizationDecodedBytes), ":")
+    if len(authorizationDecodedStringArr) < 2 {
+        return "", "", errors.New("Invalid authorization.")
+    }
+
+    id = authorizationDecodedStringArr[0]
+    secret = authorizationDecodedStringArr[1]
+    return id, secret, nil
 }
