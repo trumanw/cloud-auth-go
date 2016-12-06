@@ -18,8 +18,7 @@ import (
 )
 
 func Run(etcdns []string) error {
-	fmt.Println("Gateway etcd nodes: ")
-	fmt.Println(etcdns)
+	fmt.Printf("Gateway etcd nodes: %v ...", etcdns)
 	ctx := context.Background()
 	ctx, cancel := context.WithCancel(ctx)
 	defer cancel()
