@@ -47,6 +47,7 @@ func ValidateBasicCredentials(authorization []string) (isValid bool, err error) 
 		return false, err
 	}
 	fmt.Printf("[CREDENTIALS] Validated id: %s, secret: %s \n", id, secret)
+	// authenticate the credential through checking with the database
 
 	return true, nil
 }

@@ -28,6 +28,7 @@ func Run(etcdns []string) error {
 	n := ng.New()
 	n.Use(hnd.NewLogger())
 	n.Use(hnd.NewIdempotent())
+	n.Use(hnd.NewContentType())
 	n.Use(cors.New(cors.Options{}))
 	n.UseHandler(mux)
 
