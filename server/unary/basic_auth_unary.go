@@ -25,7 +25,7 @@ func BasicAuthUnary(
 	// validate 'Authorization' metadata
 	isValid, err := ValidateBasicCredentials(md["authorization"])
 	if err != nil {
-		return nil, grpc.Errorf(codes.Internal, "falied to validate Authorization.")
+		return nil, grpc.Errorf(codes.Unauthenticated, "falied to validate Authorization.")
 	}
 
 	if isValid {
