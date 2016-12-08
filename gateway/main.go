@@ -18,7 +18,7 @@ import (
 )
 
 func Run(etcdns []string) error {
-	fmt.Printf("Gateway etcd nodes: %v ...", etcdns)
+	fmt.Printf("Gateway etcd nodes: %v ...\n", etcdns)
 	ctx := context.Background()
 	ctx, cancel := context.WithCancel(ctx)
 	defer cancel()
@@ -27,8 +27,9 @@ func Run(etcdns []string) error {
 	// Add middlewares
 	n := ng.New()
 	n.Use(hnd.NewLogger())
-	n.Use(hnd.NewIdempotent())
 	n.Use(cors.New(cors.Options{}))
+	n.Use(hnd.NewIdempotentHandler())
+	n.Use(hnd.NewCacheHandler())
 	n.UseHandler(mux)
 
 	// resolve connections through etcd

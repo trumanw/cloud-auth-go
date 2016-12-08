@@ -7,15 +7,14 @@ import (
     "gopkg.in/unrolled/render.v1"
 )
 
-type Idempotent struct {}
+type IdempotentHandler struct {}
 
 // Retrieve an instance of Idempotent handler
-func NewIdempotent() *Idempotent {
-    // Redis client init
-    return &Idempotent{}
+func NewIdempotentHandler() *IdempotentHandler {
+    return &IdempotentHandler{}
 }
 
-func (idem *Idempotent) ServeHTTP(rw http.ResponseWriter, r *http.Request, next http.HandlerFunc) {
+func (idem *IdempotentHandler) ServeHTTP(rw http.ResponseWriter, r *http.Request, next http.HandlerFunc) {
     isvalid, err := idem.ValidateRequestIdFromHeaders(r)
     if err != nil {
         r := render.New(render.Options{})
@@ -32,12 +31,12 @@ func (idem *Idempotent) ServeHTTP(rw http.ResponseWriter, r *http.Request, next 
     }
 }
 
-func (idem *Idempotent) ValidateRequestIdFromHeaders(r *http.Request) (bool, error) {
+func (idem *IdempotentHandler) ValidateRequestIdFromHeaders(r *http.Request) (bool, error) {
     reqid := r.Header.Get("X-Request-Id")
     fmt.Println("X-Request-Id: " + reqid)
     return idem.ValidateRequestId(reqid)
 }
 
-func (idem *Idempotent) ValidateRequestId(reqid string) (bool, error) {
+func (idem *IdempotentHandler) ValidateRequestId(reqid string) (bool, error) {
     return true, nil
 }
