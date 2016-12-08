@@ -1,10 +1,10 @@
 package handler
 
 import (
-    "fmt"
+	"fmt"
 	"net/http"
 
-    "gopkg.in/unrolled/render.v1"
+	"gopkg.in/unrolled/render.v1"
 )
 
 type IdempotentHandler struct {}
