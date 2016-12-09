@@ -10,6 +10,7 @@ import (
 
 	"github.com/rs/cors"
 	hnd "github.com/trumanw/cloud-auth-go/gateway/handler"
+	ch "github.com/trumanw/cloud-auth-go/gateway/handler/httpcache"
 	pb "github.com/trumanw/cloud-auth-go/pb"
 	ng "github.com/urfave/negroni"
 
@@ -29,7 +30,7 @@ func Run(etcdns []string) error {
 	n.Use(hnd.NewLogger())
 	n.Use(cors.New(cors.Options{}))
 	n.Use(hnd.NewIdempotentHandler())
-	n.Use(hnd.NewCacheHandler())
+	n.Use(ch.NewCacheHandler(ch.NewMemoryCache(), mux))
 	n.UseHandler(mux)
 
 	// resolve connections through etcd
