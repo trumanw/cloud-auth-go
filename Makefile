@@ -1,5 +1,6 @@
 # This is a Makefile which maintains files automatically generated but to be
 # shipped together with other files.
+CFLAGS=-g
 
 PKG=github.com/grpc-ecosystem/grpc-gateway
 GOOGLEAPIS_DIR=third_party/googleapis
@@ -31,6 +32,12 @@ protoc:
 
 build: protoc
 	go build -o build/oauth main.go
+
+build-only:
+	go build -o build/oauth main.go
+
+install:
+	go build -o $(GOPATH)/bin/oauth main.go
 
 server:
 	./build/oauth server
