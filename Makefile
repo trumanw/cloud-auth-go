@@ -30,10 +30,10 @@ protoc:
 	$(SVCSRCS_GEN)
 	$(GWSRCS_GEN)
 
-build: protoc
+pb: protoc
 	go build -o build/oauth main.go
 
-build-only:
+build:
 	go build -o build/oauth main.go
 
 install:

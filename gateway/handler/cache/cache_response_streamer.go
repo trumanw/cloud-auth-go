@@ -3,7 +3,7 @@ package cache
 import (
     "net/http"
     "io/ioutil"
-    
+
     "gopkg.in/djherbis/stream.v1"
 )
 

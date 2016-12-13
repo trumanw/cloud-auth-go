@@ -16,11 +16,15 @@ import (
 const (
 	CacheHeader     = "X-Cache"
 	ProxyDateHeader = "Proxy-Date"
+    GRPCStatusOK    = 0
 )
 
 var Writes sync.WaitGroup
 
 var storeable = map[int]bool{
+    // it seems like the grpc gateway can also accept response status code
+    // to be 0. And it will automatically transfer the 0 to 200.
+    GRPCStatusOK:                    true,
 	http.StatusOK:                   true,
 	http.StatusFound:                true,
 	http.StatusNonAuthoritativeInfo: true,
@@ -31,6 +35,7 @@ var storeable = map[int]bool{
 }
 
 var cacheableByDefault = map[int]bool{
+    GRPCStatusOK:                    true,
 	http.StatusOK:                   true,
 	http.StatusFound:                true,
 	http.StatusNotModified:          true,
@@ -63,12 +68,12 @@ func (ch *CacheHandler) ServeHTTP(rw http.ResponseWriter, r *http.Request, next 
         return
     }
 
-    // if !cReq.isCacheable() {
-    //     debugf("request not cacheable")
-    //     rw.Header().Set(CacheHeader, "SKIP")
-    //     ch.UpstreamWithCache(rw, cReq, next)
-    //     return
-    // }
+    if !cReq.isCacheable() {
+        debugf("request not cacheable")
+        rw.Header().Set(CacheHeader, "SKIP")
+        ch.UpstreamWithCache(rw, cReq, next)
+        return
+    }
 
     res, err := ch.LookupInCached(cReq)
     if err != nil && err != ErrNotFoundInCache {
@@ -95,7 +100,6 @@ func (ch *CacheHandler) ServeHTTP(rw http.ResponseWriter, r *http.Request, next 
         debugf("%s %s found in %s cache", r.Method, r.URL.String(), cacheType)
     }
 
-    debugf("serving from cache")
     res.Header().Set(CacheHeader, "HIT")
     ch.ServeResource(res, rw, cReq)
 
@@ -154,22 +158,19 @@ func (ch *CacheHandler) UpstreamWithCache(rw http.ResponseWriter, r *CacheReques
     }
 
     t := Clock()
-    debugf("passing request upstream")
     rw.Header().Set(CacheHeader, "SKIP")
 
     next(rs, r.Request)
     rs.Stream.Close()
 
-    debugf("upstream responded headers in %s", Clock().Sub(t).String())
-
     // Just the headers
     res := NewResourceBytes(rs.StatusCode, nil, rs.Header())
-    // if !ch.isCacheable(res, r) {
-    //     rdr.Close()
-    //     debugf("resource is uncacheable")
-    //     rs.Header().Set(CacheHeader, "SKIP")
-    //     return
-    // }
+    if !ch.isCacheable(res, r) {
+        rdr.Close()
+        debugf("resource is uncacheable")
+        rs.Header().Set(CacheHeader, "SKIP")
+        return
+    }
 
     b, err := ioutil.ReadAll(rdr)
     rdr.Close()
@@ -241,12 +242,14 @@ func (ch *CacheHandler) LookupInCached(req *CacheRequest) (*Resource, error) {
 	}
 
 	// Secondary lookup for Vary
-	if vary := res.Header().Get("Vary"); vary != "" {
-		res, err = ch.cache.Retrieve(req.Key.Vary(vary, req.Request).String())
-		if err != nil {
-			return res, err
-		}
-	}
+	// if vary := res.Header().Get("Vary"); vary != "" {
+    //     debugf("Original retrieved key: %s", req.Key.String())
+    //     debugf("Varied : %s", req.Key.Vary(vary, req.Request).String())
+	// 	res, err = ch.cache.Retrieve(req.Key.Vary(vary, req.Request).String())
+	// 	if err != nil {
+	// 		return res, err
+	// 	}
+	// }
 
 	return res, nil
 }
@@ -323,13 +326,13 @@ func (ch *CacheHandler) isCacheable(res *Resource, r *CacheRequest) bool {
 		return false
 	}
 
-	if res.HasValidators() {
-		return true
-	} else if res.HeuristicFreshness() > 0 {
-		return true
-	}
+	// if res.HasValidators() {
+	// 	return true
+	// } else if res.HeuristicFreshness() > 0 {
+	// 	return true
+	// }
 
-	return false
+	return true
 }
 
 // correctedAge adjusts the age of a resource for clock skew and travel time

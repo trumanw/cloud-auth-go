@@ -6,9 +6,9 @@ import (
 	"strconv"
 	"time"
 
-	chain "github.com/mwitkow/go-grpc-middleware"
+	// chain "github.com/mwitkow/go-grpc-middleware"
 	gw "github.com/trumanw/cloud-auth-go/pb"
-	it "github.com/trumanw/cloud-auth-go/server/unary"
+	// it "github.com/trumanw/cloud-auth-go/server/unary"
 
 	"github.com/coreos/etcd/clientv3"
 	etcdnaming "github.com/coreos/etcd/clientv3/naming"
@@ -42,9 +42,11 @@ func Run(host string, port int, etcdns []string) error {
 	r.Update(context.TODO(), "cloud-auth-go", naming.Update{Op: naming.Add, Addr: addr, Metadata: "..."})
 
 	// add the handlers as a server option
-	unaryChain := chain.ChainUnaryServer(it.BasicAuthUnary)
-	s := grpc.NewServer(grpc.UnaryInterceptor(unaryChain))
+	// unaryChain := chain.ChainUnaryServer(it.BasicAuthUnary)
+	// s := grpc.NewServer(grpc.UnaryInterceptor(unaryChain))
+	s := grpc.NewServer()
 	gw.RegisterCilentCredentialsServiceServer(s, newClientCredentialsServer())
+	gw.RegisterTokenServiceServer(s, newTokenServer())
 
 	s.Serve(l)
 	return nil

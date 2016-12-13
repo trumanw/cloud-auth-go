@@ -205,7 +205,8 @@ func (r *Resource) RemovePrivateHeaders() {
 }
 
 func (r *Resource) HasValidators() bool {
-	if r.header.Get("Last-Modified") != "" || r.header.Get("Etag") != "" {
+	if r.header.Get("Last-Modified") != "" || r.header.Get("ETag") != "" {
+		debugf("has valiator")
 		return true
 	}
 

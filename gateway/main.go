@@ -47,11 +47,25 @@ func Run(etcdns []string) error {
 	}
 
 	// register client with connection
+	// err := pb.RegisterCilentCredentialsServiceHandler(ctx, mux, conn)
+	// if err != nil {
+	// 	return err
+	// }
+	newGateway(ctx, mux, conn)
+
+	http.ListenAndServe(":8080", n)
+	return nil
+}
+
+// register client with connection
+func newGateway(ctx context.Context, mux *runtime.ServeMux, conn *grpc.ClientConn) (error) {
 	err := pb.RegisterCilentCredentialsServiceHandler(ctx, mux, conn)
 	if err != nil {
 		return err
 	}
-
-	http.ListenAndServe(":8080", n)
+	err = pb.RegisterTokenServiceHandler(ctx, mux, conn)
+	if err != nil {
+		return err
+	}
 	return nil
 }
