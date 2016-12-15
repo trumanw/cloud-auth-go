@@ -17,6 +17,7 @@ import (
 	"google.golang.org/grpc/naming"
 )
 
+// Run is the main function to lanuch the gRPC servers.
 func Run(host string, port int, etcdns []string) error {
 	fmt.Println("Server etcd nodes: ")
 	fmt.Println(etcdns)

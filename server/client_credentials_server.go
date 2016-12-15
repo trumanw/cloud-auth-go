@@ -14,12 +14,12 @@ func newClientCredentialsServer() pb.CilentCredentialsServiceServer {
 
 func (s *clientCredentialsServer) CreateClientCredentials(ctx context.Context, clientCredentials *pb.ClientCredentialsCreatedEvent) (*pb.Token, error) {
 	token := &pb.Token{
-		"EEwJ6tF9x5WCIZDYzyZGaz6Khbw7raYRIBV_WxVvgmsG",
-		"Bearer",
-		28800,
-		"8xLOxBtZp8",
-		"https://api.paypal.com/v1/payments/.*%20https://api.paypal.com/v1/vault/credit-card%20https://api.paypal.com/v1/vault/credit-card/.*",
-		"DUMP",
+		AccessToken:  "EEwJ6tF9x5WCIZDYzyZGaz6Khbw7raYRIBV_WxVvgmsG",
+		TokenType:    "Bearer",
+		ExpiresIn:    28800,
+		RefreshToken: "8xLOxBtZp8",
+		Scope:        "https://api.paypal.com/v1/payments/.*%20https://api.paypal.com/v1/vault/credit-card%20https://api.paypal.com/v1/vault/credit-card/.*",
+		State:        "DUMP",
 	}
 	return token, nil
 }
