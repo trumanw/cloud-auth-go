@@ -3,10 +3,12 @@ package server
 import (
 	"fmt"
 	"net"
+	"net/http"
 	"strconv"
 	"time"
 
-	// chain "github.com/mwitkow/go-grpc-middleware"
+	"github.com/grpc-ecosystem/go-grpc-prometheus"
+	"github.com/prometheus/client_golang/prometheus"
 	gw "github.com/trumanw/cloud-auth-go/pb"
 	// it "github.com/trumanw/cloud-auth-go/server/unary"
 
@@ -45,9 +47,19 @@ func Run(host string, port int, etcdns []string) error {
 	// add the handlers as a server option
 	// unaryChain := chain.ChainUnaryServer(it.BasicAuthUnary)
 	// s := grpc.NewServer(grpc.UnaryInterceptor(unaryChain))
-	s := grpc.NewServer()
+
+	// initialize your gRPC server's interceptor.
+	s := grpc.NewServer(
+		grpc.StreamInterceptor(grpc_prometheus.StreamServerInterceptor),
+		grpc.UnaryInterceptor(grpc_prometheus.UnaryServerInterceptor),
+	)
+	// register your gRPC service implementations.
 	gw.RegisterCilentCredentialsServiceServer(s, newClientCredentialsServer())
 	gw.RegisterTokenServiceServer(s, newTokenServer())
+	// After all your registrations, make sure all of the Prometheus metrics are initialized.
+	grpc_prometheus.Register(s)
+	// Register Prometheus metrics handler.
+	http.Handle("/metrics", prometheus.Handler())
 
 	s.Serve(l)
 	return nil
