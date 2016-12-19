@@ -12,6 +12,7 @@ import (
 	"github.com/rs/cors"
 	hnd "github.com/trumanw/cloud-auth-go/gateway/handler"
 	cah "github.com/trumanw/cloud-auth-go/gateway/handler/cache"
+	log "github.com/trumanw/cloud-auth-go/gateway/handler/logrus"
 	pb "github.com/trumanw/cloud-auth-go/pb"
 	ng "github.com/urfave/negroni"
 
@@ -29,7 +30,7 @@ func Run(etcdns []string) error {
 	mux := runtime.NewServeMux()
 	// Add middlewares
 	n := ng.New()
-	n.Use(hnd.NewLogger())
+	n.Use(log.NewDefultMiddleware())
 	n.Use(cors.New(cors.Options{}))
 	n.Use(gzip.Gzip(gzip.DefaultCompression))
 	n.Use(hnd.NewIdempotentHandler())
