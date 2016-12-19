@@ -2,6 +2,13 @@ syntax = "proto3";
 
 package pb;
 
+// gRPC gateway imports
+import "google/api/annotations.proto";
+
+message TokenRetrievedEvent {
+    string uuid = 1;
+}
+
 message Token {
     string access_token = 1;
     string token_type = 2;
@@ -9,4 +16,12 @@ message Token {
     string refresh_token = 4;
     string scope = 5;
     string state = 6;
+}
+
+service TokenService {
+    rpc RetrieveToken(TokenRetrievedEvent) returns (Token) {
+        option (google.api.http) = {
+            get: "/token/{uuid}"
+        };
+    }
 }

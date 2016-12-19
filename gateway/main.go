@@ -8,8 +8,10 @@ import (
 	"golang.org/x/net/context"
 	"google.golang.org/grpc"
 
+	"github.com/phyber/negroni-gzip/gzip"
 	"github.com/rs/cors"
 	hnd "github.com/trumanw/cloud-auth-go/gateway/handler"
+	cah "github.com/trumanw/cloud-auth-go/gateway/handler/cache"
 	pb "github.com/trumanw/cloud-auth-go/pb"
 	ng "github.com/urfave/negroni"
 
@@ -17,6 +19,7 @@ import (
 	etcdnaming "github.com/coreos/etcd/clientv3/naming"
 )
 
+// Run is the main function of launching the gateway service.
 func Run(etcdns []string) error {
 	fmt.Printf("Gateway etcd nodes: %v ...\n", etcdns)
 	ctx := context.Background()
@@ -28,7 +31,9 @@ func Run(etcdns []string) error {
 	n := ng.New()
 	n.Use(hnd.NewLogger())
 	n.Use(cors.New(cors.Options{}))
+	n.Use(gzip.Gzip(gzip.DefaultCompression))
 	n.Use(hnd.NewIdempotentHandler())
+	n.Use(cah.NewCacheHandler(cah.NewMemoryCache()))
 	n.UseHandler(mux)
 
 	// resolve connections through etcd
@@ -45,11 +50,24 @@ func Run(etcdns []string) error {
 	}
 
 	// register client with connection
-	err := pb.RegisterCilentCredentialsServiceHandler(ctx, mux, conn)
+	err := newGateway(ctx, mux, conn)
 	if err != nil {
 		return err
 	}
 
 	http.ListenAndServe(":8080", n)
+	return nil
+}
+
+// register client with connection
+func newGateway(ctx context.Context, mux *runtime.ServeMux, conn *grpc.ClientConn) error {
+	err := pb.RegisterCilentCredentialsServiceHandler(ctx, mux, conn)
+	if err != nil {
+		return err
+	}
+	err = pb.RegisterTokenServiceHandler(ctx, mux, conn)
+	if err != nil {
+		return err
+	}
 	return nil
 }

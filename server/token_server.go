@@ -6,13 +6,13 @@ import (
 	pb "github.com/trumanw/cloud-auth-go/pb"
 )
 
-type clientCredentialsServer struct{}
+type tokenServer struct{}
 
-func newClientCredentialsServer() pb.CilentCredentialsServiceServer {
-	return new(clientCredentialsServer)
+func newTokenServer() pb.TokenServiceServer {
+	return new(tokenServer)
 }
 
-func (s *clientCredentialsServer) CreateClientCredentials(ctx context.Context, clientCredentials *pb.ClientCredentialsCreatedEvent) (*pb.Token, error) {
+func (t *tokenServer) RetrieveToken(ctx context.Context, tre *pb.TokenRetrievedEvent) (*pb.Token, error) {
 	token := &pb.Token{
 		AccessToken:  "EEwJ6tF9x5WCIZDYzyZGaz6Khbw7raYRIBV_WxVvgmsG",
 		TokenType:    "Bearer",
