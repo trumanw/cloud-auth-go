@@ -2,14 +2,54 @@
 	"ImportPath": "github.com/trumanw/cloud-auth-go",
 	"GoVersion": "go1.7",
 	"GodepVersion": "v75",
-	"Packages": [
-		"./..."
-	],
 	"Deps": [
+		{
+			"ImportPath": "github.com/beorn7/perks/quantile",
+			"Rev": "4c0e84591b9aa9e6dcfdf3e020114cd81f89d5f9"
+		},
+		{
+			"ImportPath": "github.com/coreos/etcd/auth/authpb",
+			"Comment": "v3.1.0-rc.1-62-g40f0193",
+			"Rev": "40f0193c4cee6f3e053143772056ef9b3124dba8"
+		},
+		{
+			"ImportPath": "github.com/coreos/etcd/clientv3",
+			"Comment": "v3.1.0-rc.1-62-g40f0193",
+			"Rev": "40f0193c4cee6f3e053143772056ef9b3124dba8"
+		},
+		{
+			"ImportPath": "github.com/coreos/etcd/clientv3/naming",
+			"Comment": "v3.1.0-rc.1-62-g40f0193",
+			"Rev": "40f0193c4cee6f3e053143772056ef9b3124dba8"
+		},
+		{
+			"ImportPath": "github.com/coreos/etcd/etcdserver/api/v3rpc/rpctypes",
+			"Comment": "v3.1.0-rc.1-62-g40f0193",
+			"Rev": "40f0193c4cee6f3e053143772056ef9b3124dba8"
+		},
+		{
+			"ImportPath": "github.com/coreos/etcd/etcdserver/etcdserverpb",
+			"Comment": "v3.1.0-rc.1-62-g40f0193",
+			"Rev": "40f0193c4cee6f3e053143772056ef9b3124dba8"
+		},
+		{
+			"ImportPath": "github.com/coreos/etcd/mvcc/mvccpb",
+			"Comment": "v3.1.0-rc.1-62-g40f0193",
+			"Rev": "40f0193c4cee6f3e053143772056ef9b3124dba8"
+		},
+		{
+			"ImportPath": "github.com/coreos/etcd/pkg/tlsutil",
+			"Comment": "v3.1.0-rc.1-62-g40f0193",
+			"Rev": "40f0193c4cee6f3e053143772056ef9b3124dba8"
+		},
 		{
 			"ImportPath": "github.com/fsnotify/fsnotify",
 			"Comment": "v1.4.2-2-gfd9ec7d",
 			"Rev": "fd9ec7deca8bf46ecd2a795baaacf2b3a9be1197"
+		},
+		{
+			"ImportPath": "github.com/ghodss/yaml",
+			"Rev": "a54de18a07046d8c4b26e9327698a2ebb9285b36"
 		},
 		{
 			"ImportPath": "github.com/golang/glog",
@@ -26,6 +66,11 @@
 		{
 			"ImportPath": "github.com/golang/protobuf/protoc-gen-go/descriptor",
 			"Rev": "8ee79997227bf9b34611aee7946ae64735e6fd93"
+		},
+		{
+			"ImportPath": "github.com/grpc-ecosystem/go-grpc-prometheus",
+			"Comment": "v1.1",
+			"Rev": "6b7015e65d366bf3f19b2b2a000a831940f0f7e0"
 		},
 		{
 			"ImportPath": "github.com/grpc-ecosystem/grpc-gateway/runtime",
@@ -93,12 +138,13 @@
 			"Rev": "9c47895dc1ce54302908ab8a43385d1f5df2c11c"
 		},
 		{
-			"ImportPath": "github.com/mitchellh/mapstructure",
-			"Rev": "f3009df150dadf309fdee4a54ed65c124afad715"
+			"ImportPath": "github.com/matttproud/golang_protobuf_extensions/pbutil",
+			"Comment": "v1.0.0-2-gc12348c",
+			"Rev": "c12348ce28de40eed0136aa2b644d0ee0650e56c"
 		},
 		{
-			"ImportPath": "github.com/mwitkow/go-grpc-middleware",
-			"Rev": "591df76e9998aebfb14fc2c4d96ca3216180596c"
+			"ImportPath": "github.com/mitchellh/mapstructure",
+			"Rev": "f3009df150dadf309fdee4a54ed65c124afad715"
 		},
 		{
 			"ImportPath": "github.com/pelletier/go-buffruneio",
@@ -108,6 +154,40 @@
 			"ImportPath": "github.com/pelletier/go-toml",
 			"Comment": "v0.3.5-19-g7cb9880",
 			"Rev": "7cb988051d5045890cb91402a0b5fddc76c627bc"
+		},
+		{
+			"ImportPath": "github.com/phyber/negroni-gzip/gzip",
+			"Rev": "13f05ed68248e012fcc773ecd829abcc0bb3abd8"
+		},
+		{
+			"ImportPath": "github.com/prometheus/client_golang/prometheus",
+			"Comment": "v0.8.0-42-g575f371",
+			"Rev": "575f371f7862609249a1be4c9145f429fe065e32"
+		},
+		{
+			"ImportPath": "github.com/prometheus/client_model/go",
+			"Comment": "model-0.0.2-12-gfa8ad6f",
+			"Rev": "fa8ad6fec33561be4280a8f0514318c79d7f6cb6"
+		},
+		{
+			"ImportPath": "github.com/prometheus/common/expfmt",
+			"Rev": "195bde7883f7c39ea62b0d92ab7359b5327065cb"
+		},
+		{
+			"ImportPath": "github.com/prometheus/common/internal/bitbucket.org/ww/goautoneg",
+			"Rev": "195bde7883f7c39ea62b0d92ab7359b5327065cb"
+		},
+		{
+			"ImportPath": "github.com/prometheus/common/model",
+			"Rev": "195bde7883f7c39ea62b0d92ab7359b5327065cb"
+		},
+		{
+			"ImportPath": "github.com/prometheus/procfs",
+			"Rev": "fcdb11ccb4389efb1b210b7ffb623ab71c5fdd60"
+		},
+		{
+			"ImportPath": "github.com/rainycape/vfs",
+			"Rev": "a62fd22bcf7010946a44f6a1250a82c03110a14b"
 		},
 		{
 			"ImportPath": "github.com/rs/cors",
@@ -248,38 +328,9 @@
 			"Rev": "417442a753748fba8b9fade9953a9355ad570906"
 		},
 		{
-			"ImportPath": "gopkg.in/bsm/ratelimit.v1",
-			"Rev": "db14e161995a5177acef654cb0dd785e8ee8bc22"
-		},
-		{
-			"ImportPath": "gopkg.in/redis.v5",
-			"Comment": "v5.1.1",
-			"Rev": "e7f23a300bf5f75d2a658cc07233f025362a24f6"
-		},
-		{
-			"ImportPath": "gopkg.in/redis.v5/internal",
-			"Comment": "v5.1.1",
-			"Rev": "e7f23a300bf5f75d2a658cc07233f025362a24f6"
-		},
-		{
-			"ImportPath": "gopkg.in/redis.v5/internal/consistenthash",
-			"Comment": "v5.1.1",
-			"Rev": "e7f23a300bf5f75d2a658cc07233f025362a24f6"
-		},
-		{
-			"ImportPath": "gopkg.in/redis.v5/internal/hashtag",
-			"Comment": "v5.1.1",
-			"Rev": "e7f23a300bf5f75d2a658cc07233f025362a24f6"
-		},
-		{
-			"ImportPath": "gopkg.in/redis.v5/internal/pool",
-			"Comment": "v5.1.1",
-			"Rev": "e7f23a300bf5f75d2a658cc07233f025362a24f6"
-		},
-		{
-			"ImportPath": "gopkg.in/redis.v5/internal/proto",
-			"Comment": "v5.1.1",
-			"Rev": "e7f23a300bf5f75d2a658cc07233f025362a24f6"
+			"ImportPath": "gopkg.in/djherbis/stream.v1",
+			"Comment": "v1.1.0",
+			"Rev": "f0541db8ef04758adee7c69853244546e6c6e5cf"
 		},
 		{
 			"ImportPath": "gopkg.in/unrolled/render.v1",

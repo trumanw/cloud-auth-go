@@ -6,7 +6,7 @@ import (
 	"os"
 	"time"
 
-    ng "github.com/urfave/negroni"
+	ng "github.com/urfave/negroni"
 )
 
 // ALogger interface
