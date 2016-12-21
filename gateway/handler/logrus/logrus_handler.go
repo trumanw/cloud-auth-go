@@ -10,22 +10,26 @@ import (
 	"github.com/urfave/negroni"
 )
 
+// Timer is the interface for time util
 type Timer interface {
 	Now() time.Time
 	Since(time.Time) time.Duration
 }
 
+// Clock is the real instance for Timer
 type Clock struct{}
 
+// Now retrieves the current timestamp
 func (c *Clock) Now() time.Time {
 	return time.Now()
 }
 
+// Since returns the duration from the specific time to now.
 func (c *Clock) Since(t time.Time) time.Duration {
 	return time.Since(t)
 }
 
-// LogrusHandler is a middleware handler that logs the request as it goes in and the response as it goes out.
+// Middleware is a middleware handler that logs the request as it goes in and the response as it goes out.
 type Middleware struct {
 	// Logger is the log.Logger instance used to log messages with the Logger middleware
 	Logger *log.Logger
@@ -42,7 +46,8 @@ type Middleware struct {
 
 // NewDefultMiddleware returns a new instance of logrus handler
 func NewDefultMiddleware() *Middleware {
-	return NewMiddleware(log.InfoLevel, &log.TextFormatter{}, "web")
+	// return NewMiddleware(log.InfoLevel, &log.TextFormatter{}, "web")
+	return NewMiddleware(log.InfoLevel, &log.JSONFormatter{}, "web")
 }
 
 // NewMiddlewareWithLogrus returns a new *Middleware which writes to a given logrus logger.
@@ -123,8 +128,8 @@ func (m *Middleware) ServeHTTP(rw http.ResponseWriter, r *http.Request, next htt
 
 	entry := log.NewEntry(m.Logger)
 
-	if reqId := r.Header.Get("X-Request-Id"); reqId != "" {
-		entry = entry.WithField("request_id", reqId)
+	if reqID := r.Header.Get("X-Request-Id"); reqID != "" {
+		entry = entry.WithField("request_id", reqID)
 	}
 
 	// Execute Before func
