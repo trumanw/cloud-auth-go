@@ -11,9 +11,9 @@ import (
 	"github.com/phyber/negroni-gzip/gzip"
 	"github.com/rs/cors"
 	hnd "github.com/trumanw/cloud-auth-go/gateway/handler"
-	cah "github.com/trumanw/cloud-auth-go/gateway/handler/cache"
 	log "github.com/trumanw/cloud-auth-go/gateway/handler/logrus"
 	pb "github.com/trumanw/cloud-auth-go/pb"
+	cah "github.com/trumanw/negroni-cache"
 	ng "github.com/urfave/negroni"
 
 	"github.com/coreos/etcd/clientv3"
@@ -34,7 +34,7 @@ func Run(etcdns []string) error {
 	n.Use(cors.New(cors.Options{}))
 	n.Use(gzip.Gzip(gzip.DefaultCompression))
 	n.Use(hnd.NewIdempotentHandler())
-	n.Use(cah.NewCacheHandler(cah.NewMemoryCache()))
+	n.Use(cah.NewMiddleware(cah.NewMemoryCache()))
 	n.UseHandler(mux)
 
 	// resolve connections through etcd
